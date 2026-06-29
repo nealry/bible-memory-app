@@ -37,9 +37,18 @@ function Scramble() {
   }
 
   function checkAnswer() {
-    const correct = answer.map(a => a.word).join(' ') === words.join(' ')
-    setResult(correct ? 'correct' : 'wrong')
+  const correct = answer.map(a => a.word).join(' ') === words.join(' ')
+  if (correct) {
+    const current = parseInt(localStorage.getItem('unlockedCount') || '0')
+    const verseIndex = location.state?.verseIndex ?? 0
+    if (verseIndex >= current) {
+      localStorage.setItem('unlockedCount', String(verseIndex + 1))
+    }
+    const streak = parseInt(localStorage.getItem('streak') || '0')
+    localStorage.setItem('streak', String(streak + 1))
   }
+  setResult(correct ? 'correct' : 'wrong')
+}
 
   function reset() {
     setBank(shuffle(words.map((w, i) => ({ word: w, id: i }))))

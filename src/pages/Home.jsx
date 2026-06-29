@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const verses = [
   { ref: 'John 3:16', text: 'For God so loved the world that he gave his one and only Son.' },
@@ -38,8 +39,12 @@ const pals = [
 
 function Home() {
   const navigate = useNavigate()
-  const unlockedCount = 4
-  const streak = 3
+  const [unlockedCount, setUnlockedCount] = useState(() => {
+  return parseInt(localStorage.getItem('unlockedCount') || '0')
+})
+const [streak, setStreak] = useState(() => {
+  return parseInt(localStorage.getItem('streak') || '0')
+})
   const todayVerse = verses[2]
 
   return (
@@ -86,7 +91,7 @@ function Home() {
           "{todayVerse.text}"
         </div>
         <button
-          onClick={() => navigate('/scramble', { state: { verse: todayVerse } })}
+          onClick={() => navigate('/scramble', { state: { verse: todayVerse, verseIndex: 2 } })}
           style={{ width: '100%', background: 'linear-gradient(135deg, #b48ee8, #e07aae)', border: 'none', borderRadius: 12, padding: 12, fontFamily: 'Nunito, sans-serif', fontSize: 15, fontWeight: 800, color: 'white', cursor: 'pointer' }}
         >
           ✦ Play word scramble
