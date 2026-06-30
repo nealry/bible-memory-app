@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/bible-memory-app/sw.js', { scope: '/bible-memory-app/' })})}
